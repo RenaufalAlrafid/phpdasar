@@ -1,23 +1,27 @@
-// ambil elemen
+$(document).ready(function(){   
+    // hilangkan tombolCari
+    $('#tombolCari').hide();
 
-const keyword = document.getElementById('keyword');
-const tombolCari = document.getElementById('tombolCari');
-const container = document.getElementById('container');
 
-// tambahkan event ketika keyword ditulis
 
-keyword.addEventListener('keyup', function(){
-    
-    //object ajax
-    const xhr = new XMLHttpRequest();
-    // cek kesiapan ajax
-    xhr.onreadystatechange = function(){
-        if(xhr.readyState == 4 && xhr.status == 200){
-            container.innerHTML = xhr.responseText;
-        }
-    }
 
-    // eksekusi ajax
-    xhr.open('GET', 'ajax/mahasiswa.php?keyword=' + keyword.value, true);
-    xhr.send();
+
+    //event ketika keyword ditulis
+    $('#keyword').on('keyup', function(){
+        // munculkan icon loading
+        $('.loader').show();
+
+        // ajax menggunakan load
+        // $('#container').load('ajax/mahasiswa.php?keyword=' + $('#keyword').val());
+
+        //ajax menggunakan $.get()
+        $.get('ajax/mahasiswa.php?keyword=' + $('#keyword').val(), function(data){
+            $('#container').html(data);
+            $('.loader').hide();
+        });
+    })
+
+
+
+
 });
